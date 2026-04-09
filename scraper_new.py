@@ -10,9 +10,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 
-# -------------------------
-# SETUP
-# -------------------------
+
 BASE_NEW = "https://coursehandbook.uts.edu.au"
 BASE_OLD = "https://handbookpre2025.uts.edu.au"
 YEARS_OLD = [2023, 2024]
@@ -35,9 +33,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 }
 
-# -------------------------
-# HELPER: Phân loại type
-# -------------------------
+
 def classify_type(subject_code, subject_url):
     if "/subject/" in subject_url:
         return "subject"
@@ -55,9 +51,7 @@ def classify_type(subject_code, subject_url):
     else:
         return "unknown"
 
-# -------------------------
-# HELPER: Parse requisite tables (trang mới)
-# -------------------------
+
 def extract_section_data(driver, header_text):
     soup = BeautifulSoup(driver.page_source, "html.parser")
     header = soup.find("h3", string=lambda t: t and header_text in t)
@@ -87,9 +81,7 @@ def extract_section_data(driver, header_text):
 
     return section_data
 
-# ======================================================
-# TRANG MỚI (2025, 2026) - dùng Selenium
-# ======================================================
+
 def scrape_new(driver, year, course_code):
     course_url = f"{BASE_NEW}/course/{year}/{course_code}"
     print(f"\n📅 [NEW] Scraping {year}: {course_url}")
@@ -147,7 +139,6 @@ def scrape_new(driver, year, course_code):
         subject_url = urljoin(BASE_NEW, parent["href"])
         item_type = classify_type(code or "", subject_url)
 
-        # Scrape chi tiết
         print(f"   [{item_type.upper()}] {code}")
         driver.get(subject_url)
         time.sleep(3)
@@ -187,7 +178,6 @@ def scrape_new(driver, year, course_code):
         if item_type == "subject":
             lo_header = soup2.find(string=re.compile(r"(Course Intended Learning Outcomes|Course intended learning outcomes \(CILOs\)|Subject Learning Outcomes|Subject learning objectives \(SLOs\)|Subject learning objectives)", re.I))
             if lo_header:
-                # Often it is in a heading, so let's check its parent or siblings
                 header_tag = lo_header.find_parent(["h2", "h3", "h4", "div"])
                 if not header_tag:
                     header_tag = lo_header
@@ -196,7 +186,6 @@ def scrape_new(driver, year, course_code):
                 ul = None
                 for sib in header_tag.find_next_siblings():
                     if sib.name in ["h2", "h3", "h4"]:
-                        # Break if we hit the next major heading
                         break
                     if sib.name == "ul":
                         ul = sib
@@ -205,7 +194,6 @@ def scrape_new(driver, year, course_code):
                         ul = sib.find("ul")
                         break
                 
-                # Sometimes it's nested in a wrapper div
                 if not ul:
                     parent_div = header_tag.find_parent("div")
                     if parent_div:
@@ -258,12 +246,10 @@ def scrape_new(driver, year, course_code):
           f"{len(course_data['sub_majors'])} sub-majors")
     return course_data
 
-# ======================================================
-# TRANG CŨ (2023, 2024) - dùng requests (không cần browser)
-# ======================================================
+
 def get_subjects_old(year, course_code):
     url = f"{BASE_OLD}/{year}/courses/{course_code.lower()}.html"
-    print(f"\n📅 [OLD] Scraping {year}: {url}")
+    print(f"\n [OLD] Scraping {year}: {url}")
 
     resp = requests.get(url, headers=HEADERS, timeout=15)
     soup = BeautifulSoup(resp.text, "html.parser")
@@ -439,10 +425,10 @@ def scrape_subject_old(subject):
             "learning_outcomes": list(dict.fromkeys(learning_outcomes)), # remove potential duplicates
         })
 
-        print(f"   ✅ {code}: {subject['name'][:40]}")
+        print(f" {code}: {subject['name'][:40]}")
 
     except Exception as e:
-        print(f"   ❌ {code}: {e}")
+        print(f" {code}: {e}")
 
     return subject
 
@@ -463,11 +449,8 @@ def scrape_old(year, course_code):
         "other_structures": [s for s in detailed if s["type"] != "subject"]
     }
 
-# ======================================================
-# MAIN - Gộp tất cả vào 1 file
-# ======================================================
+
 if __name__ == "__main__":
-    # Setup Selenium cho trang mới
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
 
@@ -491,7 +474,6 @@ if __name__ == "__main__":
                 "data_by_year": {}
             }
 
-            # Scrape trang cũ (2023, 2024) - không cần browser
             for year in YEARS_OLD:
                 print(f"\n{'='*50}")
                 print(f"YEAR {year} (OLD HANDBOOK) - {course_code}")
@@ -501,7 +483,6 @@ if __name__ == "__main__":
                     json.dump(all_data, f, indent=4, ensure_ascii=False)
                 print(f"💾 Saved year {year} to {output_file}")
 
-            # Scrape trang mới (2025, 2026) - dùng Selenium
             for year in YEARS_NEW:
                 print(f"\n{'='*50}")
                 print(f"YEAR {year} (NEW HANDBOOK) - {course_code}")
@@ -511,7 +492,6 @@ if __name__ == "__main__":
                     json.dump(all_data, f, indent=4, ensure_ascii=False)
                 print(f"💾 Saved year {year} to {output_file}")
                 
-            # Lưu file cuối
             with open(output_file, "w", encoding="utf-8") as f:
                  json.dump(all_data, f, indent=4, ensure_ascii=False)
 

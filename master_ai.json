@@ -48,11 +48,11 @@
                     "prereq_codes": [],
                     "antireq_raw": "49211 Software Engineering Foundation  AND 49212 Software Design and Implementation  AND 49247 Object-oriented Technology  AND 49263 Software Analysis and Design  AND 49265 Software Technologies",
                     "antireq_codes": [
-                        "49211",
-                        "49265",
-                        "49263",
                         "49247",
-                        "49212"
+                        "49212",
+                        "49211",
+                        "49263",
+                        "49265"
                     ],
                     "children_subjects": [],
                     "learning_outcomes": [
@@ -181,9 +181,9 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "37151 Introduction to Statistics  OR 33230 Mathematics 2  OR 33290 Statistics and Mathematics for Science These requisites may not apply to students in certain courses. See access conditions .",
                     "prereq_codes": [
-                        "37151",
+                        "33230",
                         "33290",
-                        "33230"
+                        "37151"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -247,15 +247,15 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "( 31250 Introduction to Data Analytics  AND 48024 Programming 2) OR 32130 Fundamentals of Data Analytics   OR ((25776 Foundations of Business Analytics  OR 26776 Foundations of Business Analytics)) OR (( 42046 Data Processing Using R  OR 42047 Data Processing Using Python  OR 25777 Data Processing Using SAS  OR 26777 Data Processing Using SAS))",
                     "prereq_codes": [
-                        "31250",
-                        "48024",
-                        "42046",
-                        "25777",
-                        "25776",
-                        "32130",
+                        "26777",
                         "42047",
+                        "32130",
+                        "42046",
+                        "25776",
+                        "48024",
+                        "25777",
                         "26776",
-                        "26777"
+                        "31250"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -434,8 +434,8 @@
                     "prereq_codes": [],
                     "antireq_raw": "48080 Introduction to Innovation  AND 48081 Innovation Processes",
                     "antireq_codes": [
-                        "48080",
-                        "48081"
+                        "48081",
+                        "48080"
                     ],
                     "children_subjects": [],
                     "learning_outcomes": [
@@ -475,14 +475,14 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "((( 32130 Fundamentals of Data Analytics  OR 31250 Introduction to Data Analytics)) OR ((25776 Foundations of Business Analytics  OR 26776 Foundations of Business Analytics) AND ( 42046 Data Processing Using R  OR 42047 Data Processing Using Python  OR 25777 Data Processing Using SAS)) OR 36106 Machine Learning Algorithms and Applications ) These requisites may not apply to students in certain courses. There are course requisites for this subject. See access conditions .",
                     "prereq_codes": [
-                        "31250",
-                        "42046",
-                        "25777",
-                        "25776",
-                        "32130",
                         "42047",
+                        "32130",
+                        "42046",
+                        "25776",
+                        "25777",
                         "26776",
-                        "36106"
+                        "36106",
+                        "31250"
                     ],
                     "antireq_raw": "31005 Machine Learning",
                     "antireq_codes": [
@@ -533,8 +533,8 @@
                     ],
                     "antireq_raw": "32932 Management Research Project  AND 32934 Research Project",
                     "antireq_codes": [
-                        "32932",
-                        "32934"
+                        "32934",
+                        "32932"
                     ],
                     "children_subjects": [],
                     "learning_outcomes": [
@@ -670,11 +670,11 @@
                     "prereq_codes": [],
                     "antireq_raw": "49211 Software Engineering Foundation  AND 49212 Software Design and Implementation  AND 49247 Object-oriented Technology  AND 49263 Software Analysis and Design  AND 49265 Software Technologies",
                     "antireq_codes": [
-                        "49211",
-                        "49265",
-                        "49263",
                         "49247",
-                        "49212"
+                        "49212",
+                        "49211",
+                        "49263",
+                        "49265"
                     ],
                     "children_subjects": [],
                     "learning_outcomes": [
@@ -806,9 +806,9 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "37151 Introduction to Statistics  OR 33230 Mathematics 2  OR 33290 Statistics and Mathematics for Science These requisites may not apply to students in certain courses. See access conditions .",
                     "prereq_codes": [
-                        "37151",
+                        "33230",
                         "33290",
-                        "33230"
+                        "37151"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -872,13 +872,13 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "( 31250 Introduction to Data Analytics  AND 48024 Programming 2) OR 32130 Fundamentals of Data Analytics   OR 26776 Foundations of Business Analytics   OR ((42046 Data Processing Using R  OR 42047 Data Processing Using Python  OR 26777 Data Processing Using SAS))",
                     "prereq_codes": [
-                        "31250",
-                        "48024",
-                        "42046",
-                        "32130",
+                        "26777",
                         "42047",
+                        "32130",
+                        "42046",
+                        "48024",
                         "26776",
-                        "26777"
+                        "31250"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -1059,8 +1059,8 @@
                     "prereq_codes": [],
                     "antireq_raw": "48080 Introduction to Innovation  AND 48081 Innovation Processes",
                     "antireq_codes": [
-                        "48080",
-                        "48081"
+                        "48081",
+                        "48080"
                     ],
                     "children_subjects": [],
                     "learning_outcomes": [
@@ -1080,13 +1080,13 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "( 31250 Introduction to Data Analytics  OR 32130 Fundamentals of Data Analytics) AND ( 48024 Programming 2  OR 32555 Fundamentals of Software Development) AND ( 41040 Introduction to Artificial Intelligence  OR 31005 Machine Learning  OR 42172 Introduction to Artificial Intelligence)",
                     "prereq_codes": [
-                        "31250",
-                        "48024",
-                        "32130",
-                        "42172",
                         "32555",
+                        "32130",
+                        "41040",
+                        "48024",
+                        "42172",
                         "31005",
-                        "41040"
+                        "31250"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -1108,13 +1108,13 @@
                     "faculty": "Information Technology",
                     "prereq_raw": "((( 32130 Fundamentals of Data Analytics  OR 31250 Introduction to Data Analytics)) OR ( 26776 Foundations of Business Analytics  AND (42046 Data Processing Using R  OR 42047 Data Processing Using Python  OR 26777 Data Processing Using SAS)) OR 36106 Machine Learning Algorithms and Applications ) These requisites may not apply to students in certain courses. There are course requisites for this subject. See access conditions .",
                     "prereq_codes": [
-                        "31250",
-                        "42046",
-                        "32130",
-                        "42047",
-                        "26776",
                         "26777",
-                        "36106"
+                        "42047",
+                        "32130",
+                        "42046",
+                        "26776",
+                        "36106",
+                        "31250"
                     ],
                     "antireq_raw": "31005 Machine Learning",
                     "antireq_codes": [
@@ -1165,8 +1165,8 @@
                     ],
                     "antireq_raw": "32932 Management Research Project  AND 32934 Research Project",
                     "antireq_codes": [
-                        "32932",
-                        "32934"
+                        "32934",
+                        "32932"
                     ],
                     "children_subjects": [],
                     "learning_outcomes": [
@@ -1459,11 +1459,11 @@
                         ]
                     },
                     "antireq_codes": [
-                        "49211",
-                        "49265",
-                        "49263",
                         "49247",
-                        "49212"
+                        "49212",
+                        "49211",
+                        "49263",
+                        "49265"
                     ],
                     "children_subjects": []
                 },
@@ -1557,13 +1557,13 @@
                         ]
                     },
                     "prereq_codes": [
-                        "31250",
-                        "22804",
-                        "32130",
                         "42047",
-                        "26776",
+                        "32130",
                         "43031",
-                        "36106"
+                        "22804",
+                        "26776",
+                        "36106",
+                        "31250"
                     ],
                     "antireq_raw": {
                         "rule": "Anti-requisite rule: (1)",
@@ -1629,13 +1629,13 @@
                         ]
                     },
                     "prereq_codes": [
-                        "31250",
+                        "32130",
+                        "43031",
+                        "41040",
                         "48024",
                         "22804",
-                        "32130",
                         "26776",
-                        "43031",
-                        "41040"
+                        "31250"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -1989,9 +1989,9 @@
                         ]
                     },
                     "prereq_codes": [
-                        "37151",
+                        "33230",
                         "33290",
-                        "33230"
+                        "37151"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -2391,8 +2391,8 @@
                         ]
                     },
                     "antireq_codes": [
-                        "48080",
-                        "48081"
+                        "48081",
+                        "48080"
                     ],
                     "children_subjects": []
                 },
@@ -2639,8 +2639,8 @@
                         ]
                     },
                     "antireq_codes": [
-                        "32932",
-                        "32934"
+                        "32934",
+                        "32932"
                     ],
                     "children_subjects": []
                 }
@@ -2873,11 +2873,11 @@
                         ]
                     },
                     "antireq_codes": [
-                        "49211",
-                        "49265",
-                        "49263",
                         "49247",
-                        "49212"
+                        "49212",
+                        "49211",
+                        "49263",
+                        "49265"
                     ],
                     "children_subjects": []
                 },
@@ -2971,13 +2971,13 @@
                         ]
                     },
                     "prereq_codes": [
-                        "31250",
-                        "22804",
-                        "32130",
                         "42047",
-                        "26776",
+                        "32130",
                         "43031",
-                        "36106"
+                        "22804",
+                        "26776",
+                        "36106",
+                        "31250"
                     ],
                     "antireq_raw": {
                         "rule": "Anti-requisite rule: (1)",
@@ -3043,13 +3043,13 @@
                         ]
                     },
                     "prereq_codes": [
-                        "31250",
+                        "32130",
+                        "43031",
+                        "41040",
                         "48024",
                         "22804",
-                        "32130",
                         "26776",
-                        "43031",
-                        "41040"
+                        "31250"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -3403,9 +3403,9 @@
                         ]
                     },
                     "prereq_codes": [
-                        "37151",
+                        "33230",
                         "33290",
-                        "33230"
+                        "37151"
                     ],
                     "antireq_raw": null,
                     "antireq_codes": [],
@@ -3805,8 +3805,8 @@
                         ]
                     },
                     "antireq_codes": [
-                        "48080",
-                        "48081"
+                        "48081",
+                        "48080"
                     ],
                     "children_subjects": []
                 },
@@ -4053,8 +4053,8 @@
                         ]
                     },
                     "antireq_codes": [
-                        "32932",
-                        "32934"
+                        "32934",
+                        "32932"
                     ],
                     "children_subjects": []
                 }

@@ -2,12 +2,10 @@ import json
 import os
 from neo4j import GraphDatabase
 
-# ==============================================================
-# CONFIGURATION
-# ==============================================================
+
 URI = "neo4j://127.0.0.1:7687"
 USERNAME = "neo4j"
-PASSWORD = "hieu1609"  # <-- ĐỔI PASSWORD NÀY THÀNH PASSWORD CỦA BẠN (TRÊN NEO4J DESKTOP)
+PASSWORD = "hieu1609" 
 
 FILES_TO_IMPORT = ["bachelor_ai.json", "master_ai.json"]
 
@@ -22,11 +20,11 @@ class UTSGraphImporter:
         """Clears all nodes and relationships to start fresh."""
         with self.driver.session() as session:
             session.run("MATCH (n) DETACH DELETE n")
-            print("🚀 Tự động xoá toàn bộ dữ liệu cũ trong Graph (Fresh start).")
+            print("Database cleared. Starting with a fresh graph")
 
     def ingest_data(self, file_path):
         if not os.path.exists(file_path):
-            print(f"⚠️ Không tìm thấy file {file_path}, bỏ qua.")
+            print(f" File {file_path} not found. Skipping...")
             return
 
         with open(file_path, "r", encoding="utf-8") as f:
@@ -39,7 +37,6 @@ class UTSGraphImporter:
         years_data = data.get("data_by_year", {})
 
         with self.driver.session() as session:
-            # 1. Tạo node Course
             session.run(
                 """
                 MERGE (c:Course {code: $code})
@@ -47,15 +44,14 @@ class UTSGraphImporter:
                 """,
                 code=course_code, name=course_name
             )
-            print(f"\n📘 Bắt đầu Import Course: {course_name} ({course_code})")
+            print(f"Importing Course: {course_name} ({course_code})")
 
-            # 2. Tạo Node Subject cho TỪNG NĂM và Node ChoiceBlock
             for year, y_data in years_data.items():
                 year_int = int(year)
                 subjects = y_data.get("subjects", [])
                 sub_majors = y_data.get("sub_majors", [])
 
-                # Tạo Subject Nodes
+
                 for subj in subjects:
                     uuid = f"{subj['subject_code']}_{year_int}"
                     session.run(
@@ -77,8 +73,7 @@ class UTSGraphImporter:
                         year=year_int
                     )
                     
-                    # Nối Subject với Course (cấu trúc môn học của khoá đào tạo năm đó)
-                    # Cách tiếp cận: Course -> CONTAINS_SUBJECT -> Subject
+                    
                     session.run(
                         """
                         MATCH (c:Course {code: $course_code})
@@ -88,7 +83,6 @@ class UTSGraphImporter:
                         course_code=course_code, uuid=uuid
                     )
 
-                # Tạo SubMajor / ChoiceBlock Nodes
                 for sm in sub_majors:
                     sm_code = sm.get('code', sm.get('subject_code'))
                     sm_title = sm.get('name', sm.get('title', sm_code))
@@ -108,7 +102,6 @@ class UTSGraphImporter:
                         type=sm.get('type', 'sub_major')
                     )
 
-                    # Nối ChoiceBlock với Course
                     session.run(
                         """
                         MATCH (c:Course {code: $course_code})
@@ -118,7 +111,6 @@ class UTSGraphImporter:
                         course_code=course_code, uuid=sm_uuid
                     )
 
-            # 3. Tạo Edges: Prerequisites, Antirequisites, và ChoiceBlock -> Subject
             for year, y_data in years_data.items():
                 year_int = int(year)
                 subjects = y_data.get("subjects", [])
@@ -133,7 +125,6 @@ class UTSGraphImporter:
                         session.run(
                             """
                             MATCH (s:Subject {uuid: $subj_uuid})
-                            // Có thể môn bị thiếu trong scraping (nằm ngoài khoa), nên ta dùng MERGE để tạo node ma
                             MERGE (req:Subject {uuid: $req_uuid})
                             ON CREATE SET req.code = $req_code, req.year = $year, req.name = 'External Subject'
                             MERGE (s)-[:REQUIRES]->(req)
@@ -170,14 +161,13 @@ class UTSGraphImporter:
                             cb_uuid=sm_uuid, child_uuid=child_uuid, child_code=child_code, year=year_int
                         )
 
-            # 4. EVOLVED_TO Edges (Khoả lấp Tracking Evolution qua các năm)
-            # Nối Subject 2023 -> 2024 -> 2025 -> 2026
+        
             all_years = sorted([int(y) for y in years_data.keys()])
             for i in range(len(all_years) - 1):
                 y_current = all_years[i]
                 y_next = all_years[i+1]
                 
-                # Tìm các cặp môn học có cùng `code` trải qua 2 năm liên tiếp
+            
                 session.run(
                     """
                     MATCH (s1:Subject {year: $y_current})
@@ -187,7 +177,7 @@ class UTSGraphImporter:
                     y_current=y_current, y_next=y_next
                 )
             
-            print(f"✅ Hoàn tất Import: {course_name} (Các năm: {all_years})")
+            print(f"Import completed for: {course_name} (Years: {all_years}")
 
 if __name__ == "__main__":
     importer = UTSGraphImporter(URI, USERNAME, PASSWORD)
@@ -195,10 +185,10 @@ if __name__ == "__main__":
         importer.clear_database()
         for f in FILES_TO_IMPORT:
             importer.ingest_data(f)
-        print("\n🎉 NHẬP LIỆU THÀNH CÔNG VÀO NEO4J DATABASE!")
-        print("💡 Gợi ý: Hãy mở Neo4j Desktop và chạy thử query: MATCH (n) RETURN n LIMIT 100")
+        print("\DATA IMPORTED SUCCESSFULLY TO NEO4J!")
+        print("Tip: Open Neo4j Desktop and run: MATCH (n) RETURN n LIMIT 100")
     except Exception as e:
-        print(f"\n❌ Lỗi kết nối tới Neo4j: {e}")
-        print("-> Vui lòng kiểm tra lại URI, USERNAME, PASSWORD và chắc chắn Neo4j Desktop đang ở trạng thái 'Active/Start'.")
+        print(f"Error connecting to Neo4j: {e}")
+        print("-> Please check your URI, USERNAME, PASSWORD and ensure Neo4j Desktop is 'Active/Started'.")
     finally:
         importer.close()

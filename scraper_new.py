@@ -84,7 +84,7 @@ def extract_section_data(driver, header_text):
 
 def scrape_new(driver, year, course_code):
     course_url = f"{BASE_NEW}/course/{year}/{course_code}"
-    print(f"\n📅 [NEW] Scraping {year}: {course_url}")
+    print(f"[NEW] Scraping {year}: {course_url}")
 
     driver.get(course_url)
     time.sleep(5)
@@ -139,7 +139,7 @@ def scrape_new(driver, year, course_code):
         subject_url = urljoin(BASE_NEW, parent["href"])
         item_type = classify_type(code or "", subject_url)
 
-        print(f"   [{item_type.upper()}] {code}")
+        print(f"[{item_type.upper()}] {code}")
         driver.get(subject_url)
         time.sleep(3)
 
@@ -242,7 +242,7 @@ def scrape_new(driver, year, course_code):
         else:
             course_data["other_structures"].append(subject_info)
 
-    print(f"   ✅ {year}: {len(course_data['subjects'])} subjects | "
+    print(f" {year}: {len(course_data['subjects'])} subjects | "
           f"{len(course_data['sub_majors'])} sub-majors")
     return course_data
 
@@ -286,7 +286,7 @@ def get_subjects_old(year, course_code):
                     "type": "choice_block"
                 })
 
-    print(f"   Found {len(subjects)} subjects")
+    print(f" Found {len(subjects)} subjects")
     return subjects
 
 def scrape_subject_old(subject):
@@ -460,7 +460,7 @@ if __name__ == "__main__":
             course_code = course["code"]
             output_file = course["output"]
             
-            print(f"\n{'#'*60}")
+            print(f"{'#'*60}")
             print(f"SCRAPING {course_name.upper()} ({course_code})")
             print(f"#{'*'*59}")
             
@@ -475,13 +475,13 @@ if __name__ == "__main__":
             }
 
             for year in YEARS_OLD:
-                print(f"\n{'='*50}")
+                print(f"{'='*50}")
                 print(f"YEAR {year} (OLD HANDBOOK) - {course_code}")
                 print("="*50)
                 all_data["data_by_year"][str(year)] = scrape_old(year, course_code)
                 with open(output_file, "w", encoding="utf-8") as f:
                     json.dump(all_data, f, indent=4, ensure_ascii=False)
-                print(f"💾 Saved year {year} to {output_file}")
+                print(f"Saved year {year} to {output_file}")
 
             for year in YEARS_NEW:
                 print(f"\n{'='*50}")
@@ -490,12 +490,12 @@ if __name__ == "__main__":
                 all_data["data_by_year"][str(year)] = scrape_new(driver, year, course_code)
                 with open(output_file, "w", encoding="utf-8") as f:
                     json.dump(all_data, f, indent=4, ensure_ascii=False)
-                print(f"💾 Saved year {year} to {output_file}")
+                print(f"Saved year {year} to {output_file}")
                 
             with open(output_file, "w", encoding="utf-8") as f:
                  json.dump(all_data, f, indent=4, ensure_ascii=False)
 
-            print(f"\n🎉 DONE WITH {course_name}! Saved to {output_file}")
+            print(f" DONE WITH {course_name}! Saved to {output_file}")
             for year in YEARS_OLD + YEARS_NEW:
                  year_data = all_data["data_by_year"].get(str(year), {})
                  print(f"   {year}: {len(year_data.get('subjects', []))} subjects | "

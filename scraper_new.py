@@ -249,7 +249,7 @@ def scrape_new(driver, year, course_code):
 
 def get_subjects_old(year, course_code):
     url = f"{BASE_OLD}/{year}/courses/{course_code.lower()}.html"
-    print(f"\n [OLD] Scraping {year}: {url}")
+    print(f"[OLD] Scraping {year}: {url}")
 
     resp = requests.get(url, headers=HEADERS, timeout=15)
     soup = BeautifulSoup(resp.text, "html.parser")
@@ -484,7 +484,7 @@ if __name__ == "__main__":
                 print(f"Saved year {year} to {output_file}")
 
             for year in YEARS_NEW:
-                print(f"\n{'='*50}")
+                print(f"{'='*50}")
                 print(f"YEAR {year} (NEW HANDBOOK) - {course_code}")
                 print("="*50)
                 all_data["data_by_year"][str(year)] = scrape_new(driver, year, course_code)
